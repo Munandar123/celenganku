@@ -1,397 +1,274 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal Setor Tabungan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-        }
-        /* Custom scrollbar for better aesthetics */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-        .progress-transition {
-            transition: width 0.5s ease-in-out;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celenganku</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#4facfe,#00f2fe);
+    min-height:100vh;
+}
+
+header{
+    background:white;
+    padding:20px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#2196F3;
+}
+
+nav a{
+    text-decoration:none;
+    color:#555;
+    margin-left:30px;
+    font-weight:600;
+}
+
+.hero{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:70px;
+    color:white;
+}
+
+.hero-text{
+    width:50%;
+}
+
+.hero-text h1{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.hero-text p{
+    font-size:18px;
+    line-height:30px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:15px 35px;
+    background:white;
+    color:#2196F3;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+.card{
+    background:white;
+    width:380px;
+    padding:30px;
+    border-radius:20px;
+    color:#333;
+    box-shadow:0 15px 30px rgba(0,0,0,.2);
+}
+
+.balance{
+    text-align:center;
+}
+
+.balance h2{
+    color:#777;
+}
+
+.balance h1{
+    margin:20px 0;
+    color:#2196F3;
+    font-size:45px;
+}
+
+.progress{
+    width:100%;
+    height:18px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.fill{
+    width:70%;
+    height:100%;
+    background:#4CAF50;
+}
+
+.info{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+}
+
+.feature{
+    background:white;
+    margin:50px;
+    border-radius:20px;
+    padding:50px;
+}
+
+.feature h2{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.box{
+    padding:30px;
+    border-radius:15px;
+    background:#f5f7fa;
+    transition:.3s;
+}
+
+.box:hover{
+    transform:translateY(-8px);
+}
+
+.box h3{
+    margin-bottom:15px;
+    color:#2196F3;
+}
+
+footer{
+    text-align:center;
+    color:white;
+    padding:30px;
+}
+</style>
+
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col pb-10">
+<body>
 
-    <nav class="bg-emerald-600 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-piggy-bank text-2xl"></i>
-                <h1 class="text-xl font-bold tracking-wide">Celenganku</h1>
-            </div>
-            <button id="btn-reset" class="hidden text-sm bg-emerald-700 hover:bg-emerald-800 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-2">
-                <i class="fa-solid fa-rotate-right"></i> Mulai Baru
-            </button>
-        </div>
-    </nav>
+<header>
 
-    <main class="max-w-4xl mx-auto px-4 w-full mt-8 flex-grow">
-        
-        <div id="setup-view" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all">
-            <div class="bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-8 text-center text-white">
-                <i class="fa-solid fa-bullseye text-4xl mb-3"></i>
-                <h2 class="text-2xl font-bold">Buat Target Baru</h2>
-                <p class="text-emerald-100 text-sm mt-1">Rencanakan tabungan masa depanmu sekarang.</p>
-            </div>
-            <div class="p-6">
-                <form id="setup-form" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Tabungan / Tujuan</label>
-                        <input type="text" id="input-name" required placeholder="Contoh: Beli Laptop Baru" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Total Target (Rp)</label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-2 text-gray-500">Rp</span>
-                            <input type="number" id="input-target" required min="1000" placeholder="10000000" 
-                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Durasi (Bulan)</label>
-                            <input type="number" id="input-duration" required min="1" max="120" placeholder="12" 
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Mulai Bulan</label>
-                            <input type="month" id="input-start-date" required 
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
-                        </div>
-                    </div>
-                    <div id="setup-error" class="text-red-500 text-sm hidden font-medium text-center"></div>
-                    <button type="submit" 
-                        class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all transform hover:-translate-y-0.5 mt-4">
-                        Buat Jadwal Tabungan
-                    </button>
-                </form>
-            </div>
-        </div>
+<div class="logo">🐷 Celenganku</div>
 
-        <div id="tracker-view" class="hidden space-y-6">
-            
-            <!-- Summary Card -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 glass-effect">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                    <div>
-                        <h2 id="display-name" class="text-2xl font-bold text-gray-800">Nama Tabungan</h2>
-                        <p class="text-sm text-gray-500 flex items-center gap-2 mt-1">
-                            <i class="fa-regular fa-calendar"></i> Mulai: <span id="display-start">Jan 2026</span> 
-                            <span class="mx-2">•</span> 
-                            <i class="fa-solid fa-hourglass-half"></i> Durasi: <span id="display-duration">12</span> Bulan
-                        </p>
-                    </div>
-                    <div class="mt-4 md:mt-0 text-left md:text-right">
-                        <p class="text-sm text-gray-500 mb-1">Setoran Per Bulan</p>
-                        <p id="display-monthly" class="text-xl font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-lg border border-emerald-100 inline-block"></p>
-                    </div>
-                </div>
+<nav>
+<a href="#">Beranda</a>
+<a href="#">Tabungan</a>
+<a href="#">Target</a>
+<a href="#">Riwayat</a>
+</nav>
 
-                <!-- Progress Section -->
-                <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                    <div class="flex justify-between items-end mb-2">
-                        <div>
-                            <p class="text-sm text-gray-500 font-medium">Terkumpul</p>
-                            <p id="display-saved" class="text-2xl font-bold text-gray-800">Rp 0</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-sm text-gray-500 font-medium">Target</p>
-                            <p id="display-target" class="text-lg font-bold text-gray-400">Rp 0</p>
-                        </div>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
-                        <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-3 rounded-full progress-transition" style="width: 0%"></div>
-                    </div>
-                    <div class="flex justify-between text-xs font-semibold text-gray-500">
-                        <span id="display-progress-pct">0%</span>
-                        <span id="display-progress-count">0 / 0 Bulan</span>
-                    </div>
-                </div>
-            </div>
+</header>
 
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                    <h3 class="font-bold text-gray-800 text-lg">Jadwal Setoran</h3>
-                    <span class="text-xs font-medium bg-white px-2 py-1 rounded border shadow-sm text-gray-500" id="status-badge">Sedang Berjalan</span>
-                </div>
-                <div class="p-0 sm:p-2">
-                    <ul id="schedule-list" class="divide-y divide-gray-100">
-                        <!-- List items will be generated by JS -->
-                    </ul>
-                </div>
-            </div>
+<section class="hero">
 
-        </div>
-    </main>
+<div class="hero-text">
 
-    <div id="custom-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-[100] hidden flex items-center justify-center backdrop-blur-sm transition-opacity">
-        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4 transform transition-all scale-95 opacity-0" id="modal-content">
-            <div class="text-center">
-                <div id="modal-icon" class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 mb-4">
-                    <i class="fa-solid fa-check text-emerald-600 text-xl"></i>
-                </div>
-                <h3 id="modal-title" class="text-lg leading-6 font-bold text-gray-900 mb-2">Berhasil!</h3>
-                <p id="modal-desc" class="text-sm text-gray-500 mb-6">Aksi berhasil dilakukan.</p>
-                <div class="flex flex-col sm:flex-row gap-3 justify-center" id="modal-actions">
-                    <button id="btn-modal-close" class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none sm:text-sm transition-colors">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<h1>Kelola Tabunganmu Dengan Mudah</h1>
 
-    <script>
-        // DOM Elements
-        const setupView = document.getElementById('setup-view');
-        const trackerView = document.getElementById('tracker-view');
-        const setupForm = document.getElementById('setup-form');
-        const setupError = document.getElementById('setup-error');
-        const btnReset = document.getElementById('btn-reset');
-        
-        // Display Elements
-        const displayName = document.getElementById('display-name');
-        const displayStart = document.getElementById('display-start');
-        const displayDuration = document.getElementById('display-duration');
-        const displayMonthly = document.getElementById('display-monthly');
-        const displaySaved = document.getElementById('display-saved');
-        const displayTarget = document.getElementById('display-target');
-        const progressBar = document.getElementById('progress-bar');
-        const displayProgressPct = document.getElementById('display-progress-pct');
-        const displayProgressCount = document.getElementById('display-progress-count');
-        const scheduleList = document.getElementById('schedule-list');
-        const statusBadge = document.getElementById('status-badge');
+<p>
+Celenganku adalah aplikasi sederhana untuk membantu mencatat
+tabungan harian, menentukan target keuangan,
+dan memantau perkembangan tabungan secara mudah.
+</p>
 
-        // Modal Elements
-        const modal = document.getElementById('custom-modal');
-        const modalContent = document.getElementById('modal-content');
-        const modalTitle = document.getElementById('modal-title');
-        const modalDesc = document.getElementById('modal-desc');
-        const modalIcon = document.getElementById('modal-icon');
-        const modalActions = document.getElementById('modal-actions');
-        const btnModalClose = document.getElementById('btn-modal-close');
+<a href="#" class="btn">Mulai Menabung</a>
 
-        // State variables
-        let savingData = null;
-        let modalConfirmCallback = null;
+</div>
 
-        const formatRupiah = (number) => {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(number);
-        };
+<div class="card">
 
-        const formatMonthYear = (dateString) => {
-            const date = new Date(dateString + '-01'); // append -01 to avoid timezone issues
-            return new Intl.DateTimeFormat('id-ID', { month: 'long', year: 'numeric' }).format(date);
-        };
+<div class="balance">
 
-        const addMonths = (dateString, monthsToAdd) => {
-            const date = new Date(dateString + '-01');
-            date.setMonth(date.getMonth() + monthsToAdd);
-            // Format back to YYYY-MM
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            return `${year}-${month}`;
-        };
+<h2>Total Tabungan</h2>
 
-        const showModal = (type, title, desc, onConfirm = null) => {
-            modalTitle.innerText = title;
-            modalDesc.innerText = desc;
-            
-            if (type === 'success') {
-                modalIcon.className = 'mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 mb-4';
-                modalIcon.innerHTML = '<i class="fa-solid fa-check text-emerald-600 text-xl"></i>';
-            } else if (type === 'warning') {
-                modalIcon.className = 'mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 mb-4';
-                modalIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-600 text-xl"></i>';
-            }
+<h1>Rp 3.500.000</h1>
 
-            modalActions.innerHTML = '';
-            
-            if (onConfirm) {
-                modalConfirmCallback = onConfirm;
-                const btnCancel = document.createElement('button');
-                btnCancel.className = 'w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:text-sm transition-colors';
-                btnCancel.innerText = 'Batal';
-                btnCancel.onclick = closeModal;
-                
-                const btnConfirm = document.createElement('button');
-                btnConfirm.className = 'w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 sm:text-sm transition-colors';
-                btnConfirm.innerText = 'Ya, Lanjutkan';
-                btnConfirm.onclick = () => {
-                    modalConfirmCallback();
-                    closeModal();
-                };
+<div class="progress">
+<div class="fill"></div>
+</div>
 
-                modalActions.appendChild(btnCancel);
-                modalActions.appendChild(btnConfirm);
-            } else {
-                const btnClose = document.createElement('button');
-                btnClose.className = 'w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 sm:text-sm transition-colors';
-                btnClose.innerText = 'Tutup';
-                btnClose.onclick = closeModal;
-                modalActions.appendChild(btnClose);
-            }
+<div class="info">
 
-            modal.classList.remove('hidden');
-            // Small delay for animation
-            setTimeout(() => {
-                modalContent.classList.remove('scale-95', 'opacity-0');
-                modalContent.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        };
+<div>
+<h3>70%</h3>
+<p>Target</p>
+</div>
 
-        const closeModal = () => {
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modalConfirmCallback = null;
-            }, 200); // match transition duration
-        };
+<div>
+<h3>Rp5 Juta</h3>
+<p>Tujuan</p>
+</div>
 
-        const initApp = () => {
-            // Set default start date to current month
-            const today = new Date();
-            const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
-            document.getElementById('input-start-date').value = currentMonth;
+</div>
 
-            loadData();
-            if (savingData) {
-                showTracker();
-            } else {
-                showSetup();
-            }
-        };
+</div>
 
-        const loadData = () => {
-            const stored = localStorage.getItem('jadwalTabunganData');
-            if (stored) {
-                try {
-                    savingData = JSON.parse(stored);
-                } catch (e) {
-                    console.error("Failed to parse data");
-                    savingData = null;
-                }
-            }
-        };
+</div>
 
-        const saveData = () => {
-            localStorage.setItem('jadwalTabunganData', JSON.stringify(savingData));
-        };
+</section>
 
-        const showSetup = () => {
-            setupView.classList.remove('hidden');
-            trackerView.classList.add('hidden');
-            btnReset.classList.add('hidden');
-        };
+<section class="feature">
 
-        const showTracker = () => {
-            setupView.classList.add('hidden');
-            trackerView.classList.remove('hidden');
-            btnReset.classList.remove('hidden');
-            renderTracker();
-        };
+<h2>Fitur Celenganku</h2>
 
-        setupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('input-name').value.trim();
-            const target = parseInt(document.getElementById('input-target').value);
-            const duration = parseInt(document.getElementById('input-duration').value);
-            const startDate = document.getElementById('input-start-date').value;
+<div class="grid">
 
-            if (!name || isNaN(target) || isNaN(duration) || !startDate) {
-                setupError.innerText = "Mohon lengkapi semua data dengan benar.";
-                setupError.classList.remove('hidden');
-                return;
-            }
+<div class="box">
+<h3>💰 Catat Tabungan</h3>
+<p>
+Mencatat setiap uang yang berhasil ditabung setiap hari.
+</p>
+</div>
 
-            if (target <= 0 || duration <= 0) {
-                setupError.innerText = "Target dan durasi harus lebih dari 0.";
-                setupError.classList.remove('hidden');
-                return;
-            }
+<div class="box">
+<h3>🎯 Target Keuangan</h3>
+<p>
+Buat target tabungan agar lebih termotivasi mencapai tujuan.
+</p>
+</div>
 
-            setupError.classList.add('hidden');
+<div class="box">
+<h3>📈 Progress</h3>
+<p>
+Lihat perkembangan tabungan melalui progress yang mudah dipahami.
+</p>
+</div>
 
-            const monthlyAmount = Math.ceil(target / duration);
-            
-            // Generate schedule
-            const schedule = [];
-            for (let i = 0; i < duration; i++) {
-                schedule.push({
-                    id: i + 1,
-                    monthDate: addMonths(startDate, i),
-                    amount: monthlyAmount,
-                    isPaid: false,
-                    paidAt: null
-                });
-            }
+<div class="box">
+<h3>📅 Riwayat</h3>
+<p>
+Seluruh transaksi tabungan tersimpan sebagai riwayat.
+</p>
+</div>
 
-            // Adjust last month if there's rounding difference
-            const totalScheduled = monthlyAmount * duration;
-            if (totalScheduled > target) {
-                const diff = totalScheduled - target;
-                schedule[duration - 1].amount -= diff;
-            } else if (totalScheduled < target) {
-                const diff = target - totalScheduled;
-                schedule[duration - 1].amount += diff;
-            }
+</div>
 
-            savingData = {
-                name,
-                target,
-                duration,
-                startDate,
-                monthlyAmount,
-                schedule,
-                createdAt: new Date().toISOString()
-            };
+</section>
 
-            saveData();
-            showTracker();
-            showModal('success', 'Berhasil!', 'Jadwal tabungan Anda telah dibuat. Semangat menabung!');
-        });
+<footer>
 
-        const renderTracker = () => {
-            if (!savingData) return;
+© 2026 Celenganku | Dibuat dengan HTML & CSS
 
-            // Header Info
-            displayName.innerText = savingData.name;
-            displayStart.innerText = formatMonthYear(savingData.startDate);
-            displayDuration.innerText = savingData.duration;
-            displayMonthly.innerText = formatRupiah(savingData.monthlyAmount);
-            displayTarget.innerText = formatRupiah(savingData.target);
+</footer>
 
-            // Calculate Progress
-            const paidMonths = savingData.schedule.filter(s => s.isPaid);
-            const totalSaved = paidMonths.reduce((sum, s) => sum + s.amount, 0);
-            const progressPct = Math.min(100, Math.round((totalSaved / savingData.target) * 100));
-
-            displaySaved.innerText = formatRupiah(totalSaved);
-            progressBar.style.width = `${progressPct}%`;
-            displayProgressPct.innerText = `${progressPct}% Terkumpul`;
-            displayProgressCount.innerText = `${paidMonths.length} / ${savingData.dura
+</body>
+</html>
